@@ -30,20 +30,12 @@ const Home = () => {
       </View>
 
       <View className="h-[92%]">
-        <ScrollView>
-          <View className="flex-row w-full justify-around">
-            <View className="w-1/2 h-auto flex-col">
-              <ImageCard imageUrl={photos[0].url} imageHeight={200} />
-              <ImageCard imageUrl={photos[1].url} imageHeight={200} />
-              <ImageCard imageUrl={photos[2].url} imageHeight={200} />
-            </View>
-            <View className="w-1/2">
-              <ImageCard imageUrl={photos[3].url} imageHeight={200} />
-              <ImageCard imageUrl={photos[4].url} imageHeight={200} />
-              <ImageCard imageUrl={photos[5].url} imageHeight={200} />
-            </View>
-          </View>
-        </ScrollView>
+        <FlatList
+          data={photos}
+          renderItem={({ item }) => <ImageCard imageUrl={item.url} />}
+          keyExtractor={(item) => item.url}
+          numColumns={2}
+        />
       </View>
     </SafeAreaView>
   );

@@ -1,16 +1,34 @@
 import { View, Text, ScrollView, Image, FlatList } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import images from "../../assets/images/images";
 import ImageCard from "../../components/ImageCard";
-import { getUnsplash } from "../../lib/unsplash";
+import { getImages } from "../../lib/unsplash";
 
 const Home = () => {
-  const [photos, isLoading] = getUnsplash("10");
+  const [isLoading, setIsLoading] = useState(true);
+  const [photos, setPhotos] = useState([]);
+
   console.log("Photos: ", photos);
   console.log("Loading: ", isLoading);
 
-  if (isLoading) {
+  const addImages = async (amount) => {
+    setIsLoading(true);
+    try {
+      const newImages = await getImages(amount);
+      setPhotos((prevPhotos) => [...prevPhotos, ...newImages]);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    addImages(10);
+  }, []);
+
+  if (isLoading && photos.length === 0) {
     return (
       <SafeAreaView className="flex items-center">
         <Text className="text-2xl font-rblack text-gray-500">Loading...</Text>
@@ -29,12 +47,13 @@ const Home = () => {
         />
       </View>
 
-      <View className="h-[92%]">
+      <View className="h-[92%] pl-1 pr-1">
         <FlatList
           data={photos}
           renderItem={({ item }) => <ImageCard imageUrl={item.url} />}
-          keyExtractor={(item) => item.url}
+          keyExtractor={(item, index) => index.toString()}
           numColumns={2}
+          onEndReached={() => addImages(10)}
         />
       </View>
     </SafeAreaView>

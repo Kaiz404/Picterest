@@ -4,13 +4,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import images from "../../assets/images/images";
 import ImageCard from "../../components/ImageCard";
 import { getImages } from "../../lib/unsplash";
+import { Link } from "expo-router";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [photos, setPhotos] = useState([]);
-
-  console.log("Photos: ", photos);
-  console.log("Loading: ", isLoading);
 
   const addImages = async (amount) => {
     setIsLoading(true);
@@ -50,8 +48,10 @@ const Home = () => {
       <View className="h-[92%] pl-1 pr-1">
         <FlatList
           data={photos}
-          renderItem={({ item }) => <ImageCard imageUrl={item.url} />}
-          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <ImageCard imageUrl={item.url} imageID={item.id} />
+          )}
+          keyExtractor={(item) => item.id}
           numColumns={2}
           onEndReached={() => addImages(10)}
         />

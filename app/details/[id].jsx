@@ -32,11 +32,6 @@ const ImageDetails = () => {
     }
   };
 
-  // const retrieveImage = async (imageID) => {
-  //   const response = await getPhoto(imageID);
-  //   return response;
-  // };
-
   useEffect(() => {
     const fetchPhoto = async () => {
       const image = await getPhoto(params.id);
@@ -46,7 +41,6 @@ const ImageDetails = () => {
     setIsLoading(true);
     try {
       fetchPhoto();
-      console.log("SUCCESFULLY RETRIVED IMAGE: ", image);
     } catch (error) {
       console.error(error);
     } finally {

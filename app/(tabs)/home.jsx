@@ -5,6 +5,7 @@ import images from "../../assets/images/images";
 import ImageCard from "../../components/ImageCard";
 import { getImages } from "../../lib/unsplash";
 import { Link } from "expo-router";
+import ImageLayout from "../../components/ImageLayout";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -35,26 +36,18 @@ const Home = () => {
   }
 
   return (
-    <SafeAreaView className="bg-black h-full w-full">
-      <View className="items-center flex-1 max-h-16">
+    <SafeAreaView className="bg-[#121212] h-full w-full">
+      <View className="items-center flex-1 max-h-16 mt-2">
         <Text className="text-2xl font-rblack text-white ">All</Text>
         <Image
-          className="w-11 h-5"
+          className="w-8 h-2"
           source={images.underline}
           resizeMode="contain"
         />
       </View>
 
       <View className="h-[92%] pl-1 pr-1">
-        <FlatList
-          data={photos}
-          renderItem={({ item }) => (
-            <ImageCard imageUrl={item.url} imageID={item.id} />
-          )}
-          keyExtractor={(item) => item.id}
-          numColumns={2}
-          onEndReached={() => addImages(10)}
-        />
+        <ImageLayout photos={photos} handleEndReached={() => addImages(10)} />
       </View>
     </SafeAreaView>
   );

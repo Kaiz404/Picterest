@@ -9,9 +9,9 @@ import {
 } from "react-native";
 import { Stack, useRouter, useLocalSearchParams } from "expo-router";
 import HeaderComponent from "./HeaderComponent";
-import ImageCard from "../../components/ImageCard";
 import { getImages, getPhoto } from "../../lib/unsplash";
 import { SafeAreaView } from "react-native-safe-area-context";
+import ImageLayout from "../../components/ImageLayout";
 
 const ImageDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -48,6 +48,10 @@ const ImageDetails = () => {
     }
   }, []);
 
+  useEffect(() => {
+    addImages("10");
+  }, []);
+
   if (isLoading && photos.length === 0) {
     return (
       <SafeAreaView className="flex items-center">
@@ -56,17 +60,12 @@ const ImageDetails = () => {
     );
   }
   return (
-    <SafeAreaView className="bg-black h-full w-full">
+    <SafeAreaView className="bg-[#121212] h-full w-full">
       <View>
-        <FlatList
-          data={photos}
-          renderItem={({ item }) => (
-            <ImageCard imageUrl={item.url} imageID={item.id} />
-          )}
-          keyExtractor={(item) => item.id}
-          numColumns={2}
-          onEndReached={() => addImages(6)}
-          ListHeaderComponent={
+        <ImageLayout
+          photos={photos}
+          handleEndReached={() => addImages(10)}
+          headerComponent={
             <HeaderComponent
               imageUrl={headerImage.url}
               imageDescription={headerImage.description}

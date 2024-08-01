@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, TouchableOpacity, Image } from "react-native";
+import { Text, View, TouchableOpacity, Image, TextInput } from "react-native";
 import { Stack } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 

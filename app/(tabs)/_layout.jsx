@@ -10,10 +10,11 @@ const TabLayout = () => {
     <Tabs
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: "black",
+          backgroundColor: "#121212",
           paddingLeft: "20%",
           paddingRight: "20%",
           height: "5%",
+          borderTopWidth: 0,
         },
       }}
     >
